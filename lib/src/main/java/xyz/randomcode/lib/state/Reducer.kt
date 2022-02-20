@@ -30,4 +30,10 @@ class Reducer<S, E>(private val state: ViewState<S>, private val reduceBlock: Re
             reduceBlock.invoke(this, effect)
         }
     }
+
+    fun reduce(block: (S) -> E) {
+        state.updateState {
+            block.invoke(this).let { reduceBlock.invoke(this, it) }
+        }
+    }
 }
