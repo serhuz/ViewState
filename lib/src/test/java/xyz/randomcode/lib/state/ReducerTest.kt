@@ -24,7 +24,7 @@ import org.junit.Test
 
 class ReducerTest {
 
-    private val mockState: ViewState<Any> = mockk() {
+    private val mockState: ViewState<Any> = mockk {
         every { updateState(any()) } answers {
             this.callOriginal()
         }
@@ -34,7 +34,7 @@ class ReducerTest {
 
     @Before
     fun setUp() {
-        reducer = Reducer(mockState) { any, e -> any }
+        reducer = Reducer(mockState) { any, _ -> any }
     }
 
     @Test
