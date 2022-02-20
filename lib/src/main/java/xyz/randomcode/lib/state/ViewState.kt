@@ -8,10 +8,7 @@ import arrow.core.Tuple5
 import arrow.optics.Getter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
@@ -104,9 +101,6 @@ class FlowViewState<T>(initial: T, private val scope: CoroutineScope) : ViewStat
         ::Triple
     ).collectAsState(Triple(getterP1.get(initial), getterP2.get(initial), getterP3.get(initial)))
 
-    private fun <P> observeProperty(getter: Getter<T, P>): Flow<P> =
-        stateFlow.map(getter::get)
-
     @Composable
     override fun <P1, P2, P3, P4> observe(
         getterP1: Getter<T, P1>,
@@ -151,4 +145,7 @@ class FlowViewState<T>(initial: T, private val scope: CoroutineScope) : ViewStat
             getterP5.get(initial)
         )
     )
+
+    private fun <P> observeProperty(getter: Getter<T, P>): Flow<P> =
+        stateFlow.map(getter::get).distinctUntilChanged()
 }
