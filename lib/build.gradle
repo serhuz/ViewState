@@ -44,13 +44,14 @@ dependencies {
 
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
 
-    api platform("io.arrow-kt:arrow-stack:1.0.1")
+    api platform("io.arrow-kt:arrow-stack:$versions.arrow")
 
     api "io.arrow-kt:arrow-core"
     api "io.arrow-kt:arrow-optics"
-//    ksp "io.arrow-kt:arrow-optics-ksp-plugin:1.0.1"
+//    ksp "io.arrow-kt:arrow-optics-ksp-plugin:$versions.arrow"
 
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.mockk:mockk:1.12.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
