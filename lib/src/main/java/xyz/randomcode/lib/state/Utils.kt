@@ -19,8 +19,32 @@ package xyz.randomcode.lib.state
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
+/**
+ * Creates a [ViewState] that can be used without a [Reducer].
+ *
+ * This enables [ViewState] updates without a need to specify an effect type.
+ *
+ * @param[initial] Initial state
+ *
+ * @return A [ViewState] instance
+ */
 fun <T> ViewModel.createViewState(initial: T): ViewState<T> =
     FlowViewState<T>(initial, this.viewModelScope)
 
+/**
+ * Creates a [Reducer] instance along with [ViewState].
+ *
+ * [ViewState] is *delegated* to a [Reducer] instance.
+ * It can be declared as a property inside [ViewModel] like this:
+ * ```
+ * val reducer: Reducer<SomeState, SomeEffect> = createReducer(/*...*/)
+ * val viewState: ViewState<SomeState> by reducer
+ * ```
+ *
+ * @param[initial] Initial state
+ * @param[reduceBlock] A lambda that exposes a current state with an effect that needs to be applied
+ *
+ * @return A [Reducer] instance
+ */
 fun <T, E> ViewModel.createReducer(initial: T, reduceBlock: Reduce<T, E>): Reducer<T, E> =
     Reducer(this.createViewState(initial), reduceBlock)
