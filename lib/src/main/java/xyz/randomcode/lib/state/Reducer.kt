@@ -1,12 +1,13 @@
 package xyz.randomcode.lib.state
 
+import androidx.lifecycle.ViewModel
 import kotlin.reflect.KProperty
 
-typealias Reduce<S, E> = (S, E) -> S
+typealias Reduce<State, Effect> = (State, Effect) -> State
 
-class Reducer<T, E>(private val state: ViewState<T>, private val reduceBlock: Reduce<T, E>) {
+class Reducer<S, E>(private val state: ViewState<S>, private val reduceBlock: Reduce<S, E>) {
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): ViewState<T> = state
+    operator fun <R : ViewModel> getValue(thisRef: R, property: KProperty<*>): ViewState<S> = state
 
     fun reduce(effect: E) {
         state.updateState {

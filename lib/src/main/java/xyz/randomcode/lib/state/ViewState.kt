@@ -16,9 +16,11 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
-typealias Update<T> = T.() -> T
+typealias Update<State> = State.() -> State
 
 abstract class ViewState<T>(protected val initial: T) {
+
+    abstract val current: T
 
     abstract fun updateState(block: Update<T>)
 
@@ -65,6 +67,9 @@ class FlowViewState<T>(initial: T, private val scope: CoroutineScope) : ViewStat
         Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     private val stateFlow: MutableStateFlow<T> = MutableStateFlow(initial)
+
+    override val current: T
+        get() = stateFlow.value
 
     override fun updateState(block: Update<T>) {
         scope.launch(singleThreadCxt) {
