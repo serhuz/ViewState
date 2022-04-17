@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 /**
  * Creates a [ViewState] that can be used without a [Reducer].
  *
- * This enables [ViewState] updates without a need to specify an effect type.
+ * This enables [ViewState] updates without the need to specify an effect type.
  *
  * @param[initial] Initial state
  *
@@ -35,7 +35,7 @@ fun <T> ViewModel.createViewState(initial: T): MutableViewState<T> =
  * Creates a [Reducer] instance along with [ViewState].
  *
  * [ViewState] is *delegated* to a [Reducer] instance.
- * It can be declared as a property inside [ViewModel] like this:
+ * It can be declared as a property inside a [ViewModel] like this:
  * ```
  * val reducer: Reducer<SomeState, SomeEffect> = createReducer(/*...*/)
  * val viewState: ViewState<SomeState> by reducer
