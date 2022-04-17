@@ -28,7 +28,7 @@ import androidx.lifecycle.viewModelScope
  *
  * @return A [ViewState] instance
  */
-fun <T> ViewModel.createViewState(initial: T): ViewState<T> =
+fun <T> ViewModel.createViewState(initial: T): MutableViewState<T> =
     FlowViewState<T>(initial, this.viewModelScope)
 
 /**

@@ -21,7 +21,7 @@ import kotlin.reflect.KProperty
 
 typealias Reduce<State, Effect> = (State, Effect) -> State
 
-class Reducer<S, E>(private val state: ViewState<S>, private val reduceBlock: Reduce<S, E>) {
+class Reducer<S, E>(private val state: MutableViewState<S>, private val reduceBlock: Reduce<S, E>) {
 
     operator fun <R : ViewModel> getValue(thisRef: R, property: KProperty<*>): ViewState<S> = state
 

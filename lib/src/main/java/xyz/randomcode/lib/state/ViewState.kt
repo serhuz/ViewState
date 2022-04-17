@@ -35,7 +35,7 @@ abstract class ViewState<T>(protected val initial: T) {
 
     abstract val current: T
 
-    abstract fun updateState(block: Update<T>)
+    protected abstract fun updateState(block: Update<T>)
 
     @Composable
     abstract fun observeStateUpdates(): State<T>
@@ -74,7 +74,15 @@ abstract class ViewState<T>(protected val initial: T) {
     ): State<Tuple5<P1, P2, P3, P4, P5>>
 }
 
-class FlowViewState<T>(initial: T, private val scope: CoroutineScope) : ViewState<T>(initial) {
+abstract class MutableViewState<T>(initial: T) : ViewState<T>(initial) {
+
+    public abstract override fun updateState(block: Update<T>)
+}
+
+class FlowViewState<T>(
+    initial: T,
+    private val scope: CoroutineScope
+) : MutableViewState<T>(initial) {
 
     private val singleThreadCxt: CoroutineContext =
         Executors.newSingleThreadExecutor().asCoroutineDispatcher()
