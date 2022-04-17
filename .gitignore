@@ -345,3 +345,4 @@ $RECYCLE.BIN/
 # Windows Installer files
 
 # Windows shortcuts
+/credentials.properties
